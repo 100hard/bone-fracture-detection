@@ -112,7 +112,7 @@ def main():
         **Model Details:**
         - Architecture: ResNet-18
         - Training Dataset: Kaggle Bone Fracture Dataset
-        - Accuracy: ~92% on test data
+        - Accuracy: ~96.6% on test data
         """)
         
         st.header("Instructions")
@@ -227,4 +227,5 @@ def main():
         """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
+
     main()
