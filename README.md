@@ -7,7 +7,7 @@ An AI-powered web application that detects bone fractures in X-ray images using 
 
 ## Project Overview
 
-This project implements a computer vision classifier to detect bone fractures in X-ray images. Using a ResNet-18 architecture trained on the Kaggle Bone Fracture Dataset, the model can distinguish between fractured and non-fractured bones with high accuracy.
+This project implements a computer vision classifier to detect bone fractures in X-ray images. Using a ResNet-18 architecture trained on the Kaggle Bone Fracture Dataset https://www.kaggle.com/datasets/bmadushanirodrigo/fracture-multi-region-x-ray-data, the model can distinguish between fractured and non-fractured bones with high accuracy.
 
 ### Key Features
 - **Real-time prediction** on uploaded X-ray images
@@ -19,7 +19,7 @@ This project implements a computer vision classifier to detect bone fractures in
 ## Model Performance
 - **Architecture**: ResNet-18 (modified for grayscale input)
 - **Dataset**: Kaggle Bone Fracture Multiregion Dataset
-- **Accuracy**: ~92% on test data
+- **Accuracy**: ~96.6% on test data
 - **Classes**: Fractured, Not Fractured
 
 ## Tech Stack
@@ -45,7 +45,7 @@ bone-fracture-detector/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/bone-fracture-detector.git
+   git clone https://github.com/100hard/bone-fracture-detection.git
    cd bone-fracture-detector
    ```
 
@@ -60,24 +60,6 @@ bone-fracture-detector/
    ```
 
 4. **Open your browser** to `http://localhost:8501`
-
-## Deployment Guide
-
-### Streamlit Community Cloud (Recommended)
-
-1. **Push to GitHub**
-   - Create a public repository
-   - Upload all files including `bone_fracture_model.pth`
-   - If model file is large, use Git LFS
-
-2. **Deploy to Streamlit**
-   - Go to [share.streamlit.io](https://share.streamlit.io)
-   - Connect your GitHub account
-   - Select your repository
-   - Click "Deploy"
-
-3. **Access your app**
-   - Your app will be available at `https://yourapp.streamlit.app`
 
 ## How It Works
 
@@ -117,14 +99,10 @@ The model was trained using:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
 **Your Name**  
-Email: your.email@example.com  
+Email: sauhardwm@gmail.com
 LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)  
 GitHub: [Your GitHub Profile](https://github.com/yourusername)
 
