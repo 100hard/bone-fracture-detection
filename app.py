@@ -5,6 +5,7 @@ from torchvision import models, transforms
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 # Page config
 st.set_page_config(
@@ -52,13 +53,30 @@ def load_model():
     try:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
+        # Check if model file exists
+        model_path = 'bone_fracture_model.pth'
+        if not os.path.exists(model_path):
+            st.error(f"Model file {model_path} not found. Please ensure the model file is uploaded to your repository.")
+            return None, None
+        
         # Load model architecture
         model = models.resnet18(pretrained=False)
         model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
         model.fc = nn.Linear(model.fc.in_features, 2)
         
-        # Load trained weights (weights_only=False for compatibility with older model files)
-        model.load_state_dict(torch.load('bone_fracture_model.pth', map_location=device, weights_only=False))
+        # Try different loading methods for compatibility
+        try:
+            # First try with weights_only=True (new secure method)
+            state_dict = torch.load(model_path, map_location=device, weights_only=True)
+        except Exception as e:
+            try:
+                # Fallback to weights_only=False for older model files
+                state_dict = torch.load(model_path, map_location=device, weights_only=False)
+            except Exception as e2:
+                st.error(f"Failed to load model with both methods. Error 1: {str(e)}, Error 2: {str(e2)}")
+                return None, None
+        
+        model.load_state_dict(state_dict)
         model.eval()
         model.to(device)
         
@@ -138,13 +156,13 @@ def main():
         if uploaded_file is not None:
             # Display uploaded image
             image = Image.open(uploaded_file)
-            st.image(image, caption="Uploaded X-ray", use_column_width=True)
+            st.image(image, caption="Uploaded X-ray", use_container_width=True)
             
             # Add some spacing
             st.write("")
             
             # Process button
-            if st.button("🔍 Analyze Image", type="primary"):
+            if st.button(" Analyze Image", type="primary"):
                 with st.spinner("Analyzing image..."):
                     # Load model
                     model, device = load_model()
@@ -201,9 +219,9 @@ def main():
             # Recommendation
             st.subheader("Recommendation")
             if prediction == 0:
-                st.warning("Potential fracture detected. Please consult a medical professional immediately for proper diagnosis and treatment.")
+                st.warning("⚠Potential fracture detected. Please consult a medical professional immediately for proper diagnosis and treatment.")
             else:
-                st.success("No obvious fracture detected. However, if you're experiencing pain or discomfort, please consult a healthcare provider.")
+                st.success(" No obvious fracture detected. However, if you're experiencing pain or discomfort, please consult a healthcare provider.")
                 
         else:
             st.info("Upload an X-ray image and click 'Analyze Image' to see results")
