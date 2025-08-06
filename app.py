@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
+# Custom CSS for professional look
 st.markdown("""
 <style>
     .main-header {
@@ -57,8 +57,8 @@ def load_model():
         model.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
         model.fc = nn.Linear(model.fc.in_features, 2)
         
-        # Load trained weights
-        model.load_state_dict(torch.load('bone_fracture_model.pth', map_location=device))
+        # Load trained weights (weights_only=False for compatibility with older model files)
+        model.load_state_dict(torch.load('bone_fracture_model.pth', map_location=device, weights_only=False))
         model.eval()
         model.to(device)
         
@@ -93,12 +93,12 @@ def predict_fracture(model, image_tensor, device):
         
         return predicted_class, confidence, probabilities[0].cpu().numpy()
 
-
+# Main app
 def main():
-    
+    # Header
     st.markdown('<h1 class="main-header">🦴 Bone Fracture Detection System</h1>', unsafe_allow_html=True)
     
-    
+    # Sidebar
     with st.sidebar:
         st.header("About This Project")
         st.write("""
@@ -140,7 +140,7 @@ def main():
             image = Image.open(uploaded_file)
             st.image(image, caption="Uploaded X-ray", use_column_width=True)
             
-            
+            # Add some spacing
             st.write("")
             
             # Process button
@@ -179,14 +179,14 @@ def main():
             if prediction == 0:  # Fractured
                 st.markdown(f"""
                 <div class="prediction-box fractured">
-                    <h2>FRACTURE DETECTED!!</h2>
+                    <h2>FRACTURE DETECTED</h2>
                     <h3>Confidence: {confidence:.1%}</h3>
                 </div>
                 """, unsafe_allow_html=True)
             else:  # Not Fractured
                 st.markdown(f"""
                 <div class="prediction-box not-fractured">
-                    <h2> No Fracture detected</h2>
+                    <h2>NO FRACTURE DETECTED</h2>
                     <h3>Confidence: {confidence:.1%}</h3>
                 </div>
                 """, unsafe_allow_html=True)
@@ -201,12 +201,12 @@ def main():
             # Recommendation
             st.subheader("Recommendation")
             if prediction == 0:
-                st.warning(" Potential fracture detected. Please consult a medical professional immediately for proper diagnosis and treatment.")
+                st.warning("Potential fracture detected. Please consult a medical professional immediately for proper diagnosis and treatment.")
             else:
-                st.success(" No obvious fracture detected. However, if you're experiencing pain or discomfort, please consult a healthcare provider.")
+                st.success("No obvious fracture detected. However, if you're experiencing pain or discomfort, please consult a healthcare provider.")
                 
         else:
-            st.info(" Upload an X-ray image and click 'Analyze Image' to see results")
+            st.info("Upload an X-ray image and click 'Analyze Image' to see results")
             
             # Sample results placeholder
             st.subheader("Sample Analysis")
@@ -221,11 +221,10 @@ def main():
     with col2:
         st.markdown("""
         <div style='text-align: center; color: #666;'>
-            <p>Built using PyTorch & Streamlit</p>
+            <p>Built with ❤️ using PyTorch & Streamlit</p>
             <p><em>For educational purposes only - Not a substitute for professional medical advice</em></p>
         </div>
         """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
-
     main()
