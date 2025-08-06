@@ -3,7 +3,7 @@
 An AI-powered web application that detects bone fractures in X-ray images using deep learning.
 
 ## Live Demo
-[**Try the app here**](your-streamlit-app-url.streamlit.app)
+[**Try the app here**](https://bone-fracture-detection-5.streamlit.app/)
 
 ## Project Overview
 
